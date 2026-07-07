@@ -4,6 +4,8 @@ An AI-powered investment research agent built for the "smart retail investor." G
 
 The agent goes beyond basic analysis with two transparency features: it explicitly discloses when it has interpreted an ambiguous or misspelled company name (e.g., "Zomito" → "Zomato Limited"), and explicitly flags when a company is unlisted and financial ratios are unavailable — so the user always knows what assumptions drove the analysis.
 
+**🔗 Live Demo:** [https://ai-investment-agent-ten.vercel.app/](https://ai-investment-agent-ten.vercel.app/)
+
 ## How to Run Locally
 
 ### 1. Prerequisites
