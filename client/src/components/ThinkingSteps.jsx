@@ -24,10 +24,12 @@ export default function ThinkingSteps({ isColdStart }) {
 
   return (
     <div
-      className="w-full max-w-md mx-auto p-5 rounded-lg mt-8"
+      className="w-full max-w-md mx-auto p-5 mt-8"
       style={{
         backgroundColor: 'var(--color-surface)',
-        border: '1px solid var(--color-border)',
+        borderRadius: '12px',
+        boxShadow: 'var(--shadow-card)',
+        border: 'none',
       }}
     >
       <div className="flex items-center gap-2.5 mb-5">
@@ -55,7 +57,10 @@ export default function ThinkingSteps({ isColdStart }) {
                 ) : isActive ? (
                   <Loader2 className="w-4 h-4 animate-spin" style={{ color: 'var(--color-accent)' }} />
                 ) : (
-                  <div className="w-4 h-4 rounded-full" style={{ border: '1.5px solid var(--color-border)' }} />
+                  <div
+                    className="w-4 h-4 rounded-full"
+                    style={{ backgroundColor: 'var(--color-elevated)', border: 'none' }}
+                  />
                 )}
               </div>
               <div>
@@ -75,12 +80,13 @@ export default function ThinkingSteps({ isColdStart }) {
 
       {isColdStart && (
         <div
-          className="mt-5 px-3 py-2.5 rounded text-xs animate-pulse-subtle"
+          className="mt-5 px-3 py-2.5 text-xs animate-pulse-subtle"
           style={{
-            backgroundColor: 'rgba(91, 141, 239, 0.08)',
-            border: '1px solid rgba(91, 141, 239, 0.2)',
+            backgroundColor: 'rgba(124, 92, 255, 0.06)',
             color: 'var(--color-accent)',
             fontFamily: 'var(--font-mono)',
+            borderRadius: '8px',
+            border: 'none',
           }}
         >
           Waking up backend server — first request may take up to 60s.

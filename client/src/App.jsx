@@ -53,10 +53,10 @@ function App() {
 
       {/* Header */}
       <header className="max-w-3xl mx-auto text-center mb-14 animate-fade-in-up">
-        <p className="text-xs uppercase tracking-[0.2em] mb-3" style={{ color: 'var(--color-accent)', fontFamily: 'var(--font-mono)' }}>
+        <p className="text-xs uppercase tracking-[0.2em] mb-3" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-mono)' }}>
           Investment Research Terminal
         </p>
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4" style={{ fontFamily: 'var(--font-headline)', color: 'var(--color-text-primary)' }}>
+        <h1 className="text-5xl sm:text-6xl tracking-tight mb-4" style={{ fontFamily: 'var(--font-headline)', color: 'var(--color-text-primary)', fontWeight: 700, letterSpacing: '-0.02em' }}>
           AI Research Agent
         </h1>
         <p className="text-base" style={{ color: 'var(--color-text-muted)' }}>
@@ -72,13 +72,16 @@ function App() {
           </div>
           <input
             type="text"
-            className="block w-full pl-11 pr-28 py-3.5 text-sm rounded-lg leading-5 outline-none transition-all"
+            className="block w-full pl-11 pr-28 py-3.5 text-sm leading-5 outline-none transition-all"
             style={{
               backgroundColor: 'var(--color-surface)',
-              border: '1px solid var(--color-border)',
+              border: '1px solid var(--color-elevated)',
+              borderRadius: '12px',
               color: 'var(--color-text-primary)',
               fontFamily: 'var(--font-body)',
             }}
+            onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--color-accent)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(124, 92, 255, 0.15)'; }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--color-elevated)'; e.currentTarget.style.boxShadow = 'none'; }}
             placeholder="e.g. Infosys, Zepto, Paytm..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -87,11 +90,13 @@ function App() {
           <button
             type="submit"
             disabled={loading || !query.trim()}
-            className="absolute inset-y-1.5 right-1.5 flex items-center gap-1.5 px-4 text-xs font-semibold rounded-md transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+            className="absolute inset-y-1.5 right-1.5 flex items-center gap-1.5 px-4 text-xs font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             style={{
               backgroundColor: 'var(--color-accent)',
-              color: '#0A0E14',
+              color: '#ffffff',
               fontFamily: 'var(--font-headline)',
+              borderRadius: '9px',
+              border: 'none',
             }}
           >
             Research
@@ -103,11 +108,11 @@ function App() {
       {/* Error */}
       {error && (
         <div
-          className="max-w-md mx-auto mt-8 px-4 py-3 rounded-lg text-sm text-center animate-fade-in-up"
+          className="max-w-md mx-auto mt-8 px-4 py-3 text-sm text-center animate-fade-in-up"
           style={{
-            backgroundColor: 'rgba(229, 72, 77, 0.1)',
-            border: '1px solid rgba(229, 72, 77, 0.3)',
+            backgroundColor: 'rgba(255, 74, 83, 0.08)',
             color: 'var(--color-strong-pass)',
+            borderRadius: '12px',
           }}
         >
           {error}

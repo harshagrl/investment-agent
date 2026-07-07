@@ -3,11 +3,11 @@ import { ExternalLink, AlertCircle, Briefcase, TrendingUp, ShieldAlert } from 'l
 
 // --- Verdict Spectrum Config ---
 const verdictConfig = {
-  "Strong Invest": { color: '#3DD68C', position: 5 },
-  "Lean Invest":   { color: '#7FCE9E', position: 25 },
-  "Neutral":       { color: '#C4A94F', position: 50 },
-  "Lean Pass":     { color: '#D68B5B', position: 75 },
-  "Strong Pass":   { color: '#E5484D', position: 95 },
+  "Strong Invest": { color: '#2EE895', position: 5 },
+  "Lean Invest":   { color: '#5AD9A4', position: 25 },
+  "Neutral":       { color: '#E0B640', position: 50 },
+  "Lean Pass":     { color: '#F08C42', position: 75 },
+  "Strong Pass":   { color: '#FF4A53', position: 95 },
   "Insufficient Data": { color: '#8B92A5', position: 50 },
 };
 
@@ -19,34 +19,61 @@ function VerdictGauge({ verdict, confidence }) {
 
   return (
     <div className="w-full">
-      {/* Gauge Bar */}
-      <div className="relative w-full h-2 rounded-full overflow-hidden" style={{ background: 'linear-gradient(to right, #3DD68C, #7FCE9E, #C4A94F, #D68B5B, #E5484D)' }}>
-        {/* Marker */}
+      {/* Gauge Bar — luminous gradient track */}
+      <div
+        className="relative w-full h-2.5 rounded-full overflow-hidden"
+        style={{
+          background: 'linear-gradient(to right, #2EE895, #5AD9A4, #E0B640, #F08C42, #FF4A53)',
+          boxShadow: '0 0 12px rgba(46, 232, 149, 0.15), 0 0 12px rgba(255, 74, 83, 0.15), inset 0 1px 2px rgba(255,255,255,0.08)',
+        }}
+      >
+        {/* Marker with radial glow */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full border-2 transition-all duration-700 ease-out"
+          className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full transition-all duration-700 ease-out"
           style={{
             left: `${markerPosition}%`,
             transform: `translate(-50%, -50%)`,
             backgroundColor: config.color,
-            borderColor: '#0A0E14',
-            boxShadow: `0 0 8px ${config.color}50`,
+            boxShadow: `0 0 10px ${config.color}, 0 0 24px ${config.color}80, 0 0 40px ${config.color}40`,
+            border: '2px solid var(--color-bg)',
           }}
         />
       </div>
 
       {/* Labels below gauge */}
-      <div className="flex justify-between mt-2">
-        <span className="text-[10px] uppercase tracking-wider" style={{ color: '#3DD68C', fontFamily: 'var(--font-mono)' }}>Invest</span>
-        <span className="text-[10px] uppercase tracking-wider" style={{ color: '#E5484D', fontFamily: 'var(--font-mono)' }}>Pass</span>
+      <div className="flex justify-between mt-2.5">
+        <span className="text-[10px] uppercase tracking-wider" style={{ color: '#2EE895', fontFamily: 'var(--font-mono)' }}>Invest</span>
+        <span className="text-[10px] uppercase tracking-wider" style={{ color: '#FF4A53', fontFamily: 'var(--font-mono)' }}>Pass</span>
       </div>
 
       {/* Verdict + Confidence readout */}
-      <div className="mt-4 flex items-baseline justify-between">
-        <span className="text-lg font-bold" style={{ color: config.color, fontFamily: 'var(--font-headline)' }}>
+      <div className="mt-5 flex items-baseline justify-between">
+        <span
+          className="text-xl font-bold"
+          style={{
+            color: config.color,
+            fontFamily: 'var(--font-headline)',
+            textShadow: `0 0 20px ${config.color}30`,
+          }}
+        >
           {verdict}
         </span>
         <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
           Confidence: <span className="font-mono-num font-bold" style={{ color: config.color }}>{confidence}%</span>
+        </span>
+      </div>
+
+      {/* Verdict badge with glow */}
+      <div
+        className="mt-3 inline-flex items-center px-3 py-1.5"
+        style={{
+          backgroundColor: `${config.color}12`,
+          borderRadius: '8px',
+          boxShadow: `0 0 16px ${config.color}20`,
+        }}
+      >
+        <span className="text-xs font-semibold" style={{ color: config.color, fontFamily: 'var(--font-mono)' }}>
+          {verdict === "Insufficient Data" ? "—" : confidence >= 70 ? "HIGH CONVICTION" : confidence >= 40 ? "MODERATE" : "LOW CONVICTION"}
         </span>
       </div>
     </div>
@@ -55,7 +82,7 @@ function VerdictGauge({ verdict, confidence }) {
 
 function ReasoningSection({ icon: Icon, title, items, accentColor }) {
   return (
-    <div className="py-5" style={{ borderBottom: '1px solid var(--color-border)' }}>
+    <div className="py-5" style={{ borderBottom: 'none' }}>
       <div className="flex items-center gap-2 mb-3">
         <Icon className="w-4 h-4" style={{ color: accentColor }} />
         <h3 className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-headline)' }}>
@@ -63,7 +90,7 @@ function ReasoningSection({ icon: Icon, title, items, accentColor }) {
         </h3>
       </div>
       {items && items.length > 0 ? (
-        <ul className="space-y-2 pl-6">
+        <ul className="space-y-2.5 pl-6">
           {items.map((item, i) => (
             <li key={i} className="text-sm leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
               {item}
@@ -73,6 +100,8 @@ function ReasoningSection({ icon: Icon, title, items, accentColor }) {
       ) : (
         <p className="text-xs italic pl-6" style={{ color: 'var(--color-text-muted)' }}>No data available.</p>
       )}
+      {/* Subtle separator — background-based, not border */}
+      <div className="mt-5" style={{ height: '1px', background: 'linear-gradient(to right, transparent, var(--color-elevated), transparent)' }} />
     </div>
   );
 }
@@ -91,15 +120,22 @@ function SourceChips({ sources }) {
             href={source.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs transition-colors"
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs transition-all"
             style={{
-              backgroundColor: 'rgba(91, 141, 239, 0.06)',
-              border: '1px solid var(--color-border)',
-              color: 'var(--color-accent)',
+              backgroundColor: 'var(--color-elevated)',
+              borderRadius: '8px',
+              color: 'var(--color-text-muted)',
               fontFamily: 'var(--font-body)',
+              border: 'none',
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--color-accent)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--color-border)'; }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#242938';
+              e.currentTarget.style.color = 'var(--color-text-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--color-elevated)';
+              e.currentTarget.style.color = 'var(--color-text-muted)';
+            }}
           >
             <ExternalLink className="w-3 h-3" />
             <span className="truncate max-w-[180px]">{source.title}</span>
@@ -117,10 +153,12 @@ export default function ReportCard({ data, originalQuery }) {
   if (data.verdict === "Insufficient Data" || data.insufficient_data_reason) {
     return (
       <div
-        className="w-full max-w-2xl mx-auto mt-10 p-6 rounded-lg"
+        className="w-full max-w-2xl mx-auto mt-10 p-6"
         style={{
           backgroundColor: 'var(--color-surface)',
-          border: '1px solid var(--color-border)',
+          borderRadius: '12px',
+          boxShadow: 'var(--shadow-card)',
+          border: 'none',
         }}
       >
         <div className="flex items-start gap-3">
@@ -141,10 +179,12 @@ export default function ReportCard({ data, originalQuery }) {
   // --- Full Report ---
   return (
     <div
-      className="w-full max-w-5xl mx-auto mt-10 rounded-lg overflow-hidden"
+      className="w-full max-w-5xl mx-auto mt-10 overflow-hidden"
       style={{
         backgroundColor: 'var(--color-surface)',
-        border: '1px solid var(--color-border)',
+        borderRadius: '12px',
+        boxShadow: 'var(--shadow-card)',
+        border: 'none',
       }}
     >
       {/* Two-column layout on desktop, stacked on mobile */}
@@ -152,8 +192,11 @@ export default function ReportCard({ data, originalQuery }) {
 
         {/* LEFT COLUMN: Gauge + Key Stats (sticky on desktop) */}
         <div
-          className="w-full lg:w-[340px] flex-shrink-0 p-6 lg:p-8 lg:sticky lg:top-0 lg:self-start"
-          style={{ borderRight: '1px solid var(--color-border)' }}
+          className="w-full lg:w-[360px] flex-shrink-0 p-6 lg:p-8 lg:sticky lg:top-0 lg:self-start"
+          style={{
+            /* No border — use background step for separation */
+            backgroundColor: 'rgba(13, 15, 19, 0.3)',
+          }}
         >
           <p className="text-[10px] uppercase tracking-widest mb-5" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-mono)' }}>
             Verdict
@@ -161,50 +204,65 @@ export default function ReportCard({ data, originalQuery }) {
           <VerdictGauge verdict={data.verdict} confidence={data.confidence} />
 
           {!data.is_listed && (
-            <div className="text-xs font-mono text-amber-400/80 border border-amber-400/20 rounded px-3 py-2 mt-3">
+            <div
+              className="text-xs mt-4 px-3 py-2.5"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                color: '#E0B640',
+                backgroundColor: 'rgba(224, 182, 64, 0.06)',
+                borderRadius: '8px',
+                boxShadow: '0 0 12px rgba(224, 182, 64, 0.08)',
+              }}
+            >
               Unlisted company — analysis based on qualitative signals only, financial ratios unavailable
             </div>
           )}
 
           {data.resolved_name && originalQuery && data.resolved_name.toLowerCase() !== originalQuery.toLowerCase().trim() && (
-            <div className="text-xs font-mono text-blue-400/80 border border-blue-400/20 rounded px-3 py-2 mt-2">
+            <div
+              className="text-xs mt-2 px-3 py-2.5"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--color-text-muted)',
+                backgroundColor: 'var(--color-elevated)',
+                borderRadius: '8px',
+              }}
+            >
               Interpreting "{originalQuery}" as {data.resolved_name}
             </div>
           )}
 
-          {/* Key Stats (if we had any structured financial numbers, they'd go here) */}
-          <div className="mt-8 pt-5" style={{ borderTop: '1px solid var(--color-border)' }}>
-            <p className="text-[10px] uppercase tracking-widest mb-3" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-mono)' }}>
+          {/* Key Stats — numbers as visual anchors */}
+          <div className="mt-8 pt-6" style={{ borderTop: 'none' }}>
+            {/* Subtle separator */}
+            <div className="mb-5" style={{ height: '1px', background: 'linear-gradient(to right, transparent, var(--color-elevated), transparent)' }} />
+            <p className="text-[10px] uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-mono)' }}>
               Analysis Summary
             </p>
-            <div className="grid grid-cols-2 gap-4 mt-3">
+            <div className="grid grid-cols-2 gap-5 mt-3">
               <div>
-                <p className="text-[10px] uppercase" style={{ color: 'var(--color-text-muted)' }}>Quality</p>
-                <p className="font-mono-num text-lg font-bold mt-0.5" style={{ color: 'var(--color-text-primary)' }}>
+                <p className="font-mono-num text-2xl font-bold leading-none" style={{ color: 'var(--color-text-primary)' }}>
                   {data.business_quality?.length || 0}
                 </p>
-                <p className="text-[10px]" style={{ color: 'var(--color-text-muted)' }}>signals</p>
+                <p className="text-[10px] uppercase mt-1.5" style={{ color: 'var(--color-text-muted)' }}>Quality signals</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase" style={{ color: 'var(--color-text-muted)' }}>Momentum</p>
-                <p className="font-mono-num text-lg font-bold mt-0.5" style={{ color: 'var(--color-text-primary)' }}>
+                <p className="font-mono-num text-2xl font-bold leading-none" style={{ color: 'var(--color-text-primary)' }}>
                   {data.momentum?.length || 0}
                 </p>
-                <p className="text-[10px]" style={{ color: 'var(--color-text-muted)' }}>signals</p>
+                <p className="text-[10px] uppercase mt-1.5" style={{ color: 'var(--color-text-muted)' }}>Momentum signals</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase" style={{ color: 'var(--color-text-muted)' }}>Red Flags</p>
-                <p className="font-mono-num text-lg font-bold mt-0.5" style={{ color: data.red_flags?.length > 0 ? 'var(--color-strong-pass)' : 'var(--color-strong-invest)' }}>
+                <p className="font-mono-num text-2xl font-bold leading-none" style={{ color: data.red_flags?.length > 0 ? 'var(--color-strong-pass)' : 'var(--color-strong-invest)' }}>
                   {data.red_flags?.length || 0}
                 </p>
-                <p className="text-[10px]" style={{ color: 'var(--color-text-muted)' }}>flagged</p>
+                <p className="text-[10px] uppercase mt-1.5" style={{ color: 'var(--color-text-muted)' }}>Flagged</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase" style={{ color: 'var(--color-text-muted)' }}>Sources</p>
-                <p className="font-mono-num text-lg font-bold mt-0.5" style={{ color: 'var(--color-text-primary)' }}>
+                <p className="font-mono-num text-2xl font-bold leading-none" style={{ color: 'var(--color-text-primary)' }}>
                   {data.sources?.length || 0}
                 </p>
-                <p className="text-[10px]" style={{ color: 'var(--color-text-muted)' }}>cited</p>
+                <p className="text-[10px] uppercase mt-1.5" style={{ color: 'var(--color-text-muted)' }}>Cited</p>
               </div>
             </div>
           </div>

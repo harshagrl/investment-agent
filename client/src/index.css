@@ -1,29 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-  /* --- Background & Surface --- */
-  --color-bg: #0A0E14;
-  --color-surface: #12161F;
-  --color-border: #232838;
+  /* --- Elevation System (no borders, lightness only) --- */
+  --color-bg: #0D0F13;
+  --color-surface: #15181F;
+  --color-elevated: #1C202B;
 
   /* --- Text --- */
   --color-text-primary: #E8EAED;
   --color-text-muted: #8B92A5;
 
-  /* --- Accent --- */
-  --color-accent: #5B8DEF;
+  /* --- Accent: Electric Indigo (used sparingly) --- */
+  --color-accent: #7C5CFF;
 
-  /* --- Verdict Spectrum --- */
-  --color-strong-invest: #3DD68C;
-  --color-lean-invest: #7FCE9E;
-  --color-neutral: #C4A94F;
-  --color-lean-pass: #D68B5B;
-  --color-strong-pass: #E5484D;
+  /* --- Verdict Spectrum (saturated + glow-ready) --- */
+  --color-strong-invest: #2EE895;
+  --color-lean-invest: #5AD9A4;
+  --color-neutral: #E0B640;
+  --color-lean-pass: #F08C42;
+  --color-strong-pass: #FF4A53;
 
   /* --- Fonts --- */
   --font-headline: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  /* --- Shadows (elevation) --- */
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
 /* --- Base Resets --- */
@@ -69,6 +73,11 @@ body {
 
 @keyframes gauge-fill {
   from { width: 0; }
+}
+
+@keyframes gauge-glow {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
 }
 
 .animate-fade-in-up {
