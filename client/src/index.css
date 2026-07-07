@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@theme {
+  /* --- Background & Surface --- */
+  --color-bg: #0A0E14;
+  --color-surface: #12161F;
+  --color-border: #232838;
+
+  /* --- Text --- */
+  --color-text-primary: #E8EAED;
+  --color-text-muted: #8B92A5;
+
+  /* --- Accent --- */
+  --color-accent: #5B8DEF;
+
+  /* --- Verdict Spectrum --- */
+  --color-strong-invest: #3DD68C;
+  --color-lean-invest: #7FCE9E;
+  --color-neutral: #C4A94F;
+  --color-lean-pass: #D68B5B;
+  --color-strong-pass: #E5484D;
+
+  /* --- Fonts --- */
+  --font-headline: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* --- Base Resets --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* --- Utility: Mono numbers --- */
+.font-mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Keyframes --- */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes gauge-fill {
+  from { width: 0; }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
